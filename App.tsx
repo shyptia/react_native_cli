@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -20,6 +21,7 @@ import {
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Heart from './assets/svgImages/heart.svg';
 import Beer from './assets/svgImages/beer.svg';
+import LinearGradient from 'react-native-linear-gradient';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -59,20 +61,25 @@ function App(): JSX.Element {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaView style={[backgroundStyle, {flex: 1}]}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
+        style={backgroundStyle}
+        contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.viewContent}>
-          <Section title="It's my first React Native project" />
+          <LinearGradient
+            colors={['#fdbb2d', '#22c1c3']}
+            style={styles.linearGradient}>
+            <Section title="It's my first React Native project" />
 
-          <Heart width={100} height={100} />
+            <Heart width={100} height={100} style={styles.image} />
 
-          <Beer width={100} height={100} />
+            <Beer width={100} height={100} style={styles.image} />
+          </LinearGradient>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -96,9 +103,16 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat',
   },
   viewContent: {
-    padding: 24,
+    height: '100%',
     backgroundColor: Colors.white,
     alignContent: 'center',
+  },
+  image: {
+    marginBottom: 10,
+    marginLeft: 24,
+  },
+  linearGradient: {
+    flex: 1,
   },
 });
 
