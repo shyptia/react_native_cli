@@ -17,7 +17,9 @@ import {
   View,
 } from 'react-native';
 
-import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import Heart from './assets/svgImages/heart.svg';
+import Beer from './assets/svgImages/beer.svg';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -65,13 +67,12 @@ function App(): JSX.Element {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <Header />
-
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
+        <View style={styles.viewContent}>
           <Section title="It's my first React Native project" />
+
+          <Heart width={100} height={100} />
+
+          <Beer width={100} height={100} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -94,9 +95,10 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontFamily: 'Montserrat',
   },
-  highlight: {
-    fontFamily: 'Montserrat',
-    fontWeight: '700',
+  viewContent: {
+    padding: 24,
+    backgroundColor: Colors.white,
+    alignContent: 'center',
   },
 });
 
