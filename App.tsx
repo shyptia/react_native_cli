@@ -22,6 +22,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Heart from './assets/svgImages/heart.svg';
 import Beer from './assets/svgImages/beer.svg';
 import LinearGradient from 'react-native-linear-gradient';
+import {GradientText} from './src/componets/GradientText';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -72,9 +73,15 @@ function App(): JSX.Element {
         contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.viewContent}>
           <LinearGradient
-            colors={['#fdbb2d', '#22c1c3']}
+            colors={['#f2cc7b', '#cc420a']}
             style={styles.linearGradient}>
             <Section title="It's my first React Native project" />
+
+            <GradientText
+              colors={['#a80735', '#5b050c']}
+              style={styles.gradientText}>
+              I'm a first gradient text
+            </GradientText>
 
             <Heart width={100} height={100} style={styles.image} />
 
@@ -113,6 +120,13 @@ const styles = StyleSheet.create({
   },
   linearGradient: {
     flex: 1,
+  },
+  gradientText: {
+    marginBottom: 15,
+    fontFamily: 'Montserrat',
+    fontSize: 36,
+    fontWeight: 'bold',
+    alignSelf: 'center',
   },
 });
 
