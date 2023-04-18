@@ -1,8 +1,9 @@
 import React from 'react';
-import {Text, StyleSheet} from 'react-native';
+import {Text} from 'react-native';
 import MaskedView from '@react-native-masked-view/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
 import {TextProps} from 'react-native';
+import {styles} from './GradientTextStyles';
 
 interface Coordinate {
   x: number;
@@ -32,9 +33,3 @@ export const GradientText: React.FC<Props> = props => {
     </MaskedView>
   );
 };
-
-const styles = StyleSheet.create({
-  text: {
-    opacity: 0,
-  },
-});

@@ -7,7 +7,6 @@
  */
 
 import React, {useEffect} from 'react';
-import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -22,49 +21,26 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Heart from './assets/svgImages/heart.svg';
 import Beer from './assets/svgImages/beer.svg';
 import LinearGradient from 'react-native-linear-gradient';
-import {GradientText} from './src/componets/GradientText';
+import {GradientText} from './src/componets/GradientText/GradientText';
 import Config from 'react-native-config';
 import SplashScreen from 'react-native-splash-screen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+import {Section} from './src/componets/Section/Section';
+import FlashMessage from 'react-native-flash-message';
+import {AppButton} from './src/componets/AppButton/AppButton';
+import {
+  showErrorMessage,
+  showInfoMessage,
+  showSuccessMessage,
+} from './helpers/showMessages';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
+  useEffect(() => SplashScreen.hide(), []);
+
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
-  useEffect(() => SplashScreen.hide(), []);
-
   const envVar = Config.CUSTOM_VARIALE;
   const x = Config.X;
   const y = Config.Y;
@@ -104,7 +80,16 @@ function App(): JSX.Element {
                 {`x + y = ${Number(x) + Number(y)}`}
               </Text>
             )}
+
+            <AppButton title="Show info message" onPress={showInfoMessage} />
+            <AppButton title="Show error message" onPress={showErrorMessage} />
+            <AppButton
+              title="Show success message"
+              onPress={showSuccessMessage}
+            />
           </LinearGradient>
+
+          <FlashMessage position="top" />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -112,21 +97,6 @@ function App(): JSX.Element {
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontFamily: 'Montserrat',
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    fontFamily: 'Montserrat',
-  },
   viewContent: {
     height: '100%',
     backgroundColor: Colors.white,
@@ -153,6 +123,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: 'black',
+  },
+  button: {
+    marginBottom: 10,
   },
 });
 
