@@ -6,7 +6,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -24,6 +24,7 @@ import Beer from './assets/svgImages/beer.svg';
 import LinearGradient from 'react-native-linear-gradient';
 import {GradientText} from './src/componets/GradientText';
 import Config from 'react-native-config';
+import SplashScreen from 'react-native-splash-screen';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -61,6 +62,8 @@ function App(): JSX.Element {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  useEffect(() => SplashScreen.hide(), []);
 
   const envVar = Config.CUSTOM_VARIALE;
   const x = Config.X;
