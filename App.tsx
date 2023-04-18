@@ -7,13 +7,11 @@
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
   useColorScheme,
   View,
 } from 'react-native';
@@ -23,43 +21,32 @@ import Heart from './assets/svgImages/heart.svg';
 import Beer from './assets/svgImages/beer.svg';
 import LinearGradient from 'react-native-linear-gradient';
 import {GradientText} from './src/componets/GradientText';
+import {Section} from './src/componets/Section';
+import {AppButton} from './src/componets/AppButton';
+import {Navigation} from 'react-native-navigation';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+interface Props {
+  componentId: string;
 }
 
-function App(): JSX.Element {
+function App(props: Props): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  const onPress = () =>
+    Navigation.push(props.componentId, {
+      component: {
+        name: 'SecondScreen',
+        options: {
+          topBar: {
+            visible: false,
+          },
+        },
+      },
+    });
 
   return (
     <SafeAreaView style={[backgroundStyle, {flex: 1}]}>
@@ -86,6 +73,8 @@ function App(): JSX.Element {
             <Heart width={100} height={100} style={styles.image} />
 
             <Beer width={100} height={100} style={styles.image} />
+
+            <AppButton onPress={onPress} title="Go to the second screen" />
           </LinearGradient>
         </View>
       </ScrollView>
@@ -94,21 +83,6 @@ function App(): JSX.Element {
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontFamily: 'Montserrat',
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    fontFamily: 'Montserrat',
-  },
   viewContent: {
     height: '100%',
     backgroundColor: Colors.white,
