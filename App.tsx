@@ -23,6 +23,7 @@ import Heart from './assets/svgImages/heart.svg';
 import Beer from './assets/svgImages/beer.svg';
 import LinearGradient from 'react-native-linear-gradient';
 import {GradientText} from './src/componets/GradientText';
+import Config from 'react-native-config';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -61,6 +62,10 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const envVar = Config.CUSTOM_VARIALE;
+  const x = Config.X;
+  const y = Config.Y;
+
   return (
     <SafeAreaView style={[backgroundStyle, {flex: 1}]}>
       <StatusBar
@@ -86,6 +91,16 @@ function App(): JSX.Element {
             <Heart width={100} height={100} style={styles.image} />
 
             <Beer width={100} height={100} style={styles.image} />
+
+            <Text style={styles.simpleText}>{envVar?.toUpperCase()}</Text>
+            <Text style={styles.simpleText}>{`The value of x is ${x}`}</Text>
+            <Text style={styles.simpleText}>{`The value of y is ${y}`}</Text>
+
+            {x && y && (
+              <Text style={styles.simpleText}>
+                {`x + y = ${Number(x) + Number(y)}`}
+              </Text>
+            )}
           </LinearGradient>
         </View>
       </ScrollView>
@@ -127,6 +142,14 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: 'bold',
     alignSelf: 'center',
+  },
+  simpleText: {
+    marginBottom: 10,
+    marginLeft: 24,
+    fontFamily: 'Montserrat',
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
   },
 });
 
