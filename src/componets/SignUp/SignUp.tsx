@@ -7,7 +7,7 @@
  * @format
  */
 
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -19,7 +19,6 @@ import {
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import LinearGradient from 'react-native-linear-gradient';
-import SplashScreen from 'react-native-splash-screen';
 import {AppButton} from '../AppButton/AppButton';
 import { styles } from './SignUpStyles';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -27,20 +26,22 @@ import { showErrorMessage, showSuccessMessage } from '../../../helpers/showMessa
 import { RootStackParamList } from '../../../App';
 import { storeData } from '../../../helpers/storeDataInAsyncStorage';
 import { storeUserData } from '../../../helpers/storeDataWithEncryptedStorage';
+import ReactNativeBiometrics, {BiometryTypes} from 'react-native-biometrics';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'SignUp'>;
 };
 
+const rnBiometrics = new ReactNativeBiometrics();
+
 export const SignUp = ({ navigation }: Props) => {
   const [username, setUsername] = useState('');
   const [surname, setSurname] = useState('');
+  const [isBiometricAvailable, setIsBiometricAvailable] = useState(false);
 
-  useEffect(() => SplashScreen.hide(), []);
+  const goBack = useCallback(() => navigation.goBack(), [navigation]);
 
-  const goBack = () => navigation.goBack();
-
-  const signUpWithAsyncStorage = () => {
+  const signUpWithAsyncStorage = useCallback(() => {
     if (!username || !surname) {
       showErrorMessage();
       return;
@@ -50,9 +51,9 @@ export const SignUp = ({ navigation }: Props) => {
     storeData('surname', surname);
     showSuccessMessage();
     navigation.navigate('SignUpWithAsyncStorage');
-  };
+  }, [surname, username, navigation]);
 
-  const signUpWithEncryptedStorage = () => {
+  const signUpWithEncryptedStorage = useCallback(() => {
     if (!username || !surname) {
       showErrorMessage();
       return;
@@ -62,7 +63,42 @@ export const SignUp = ({ navigation }: Props) => {
     storeUserData('userData', userData);
     showSuccessMessage();
     navigation.navigate('SignUpWithEncryptedStorage');
+  }, [username, surname, navigation]);
+
+  const isBiometricSupport = async () => {
+    let {available, biometryType} = await rnBiometrics.isSensorAvailable();
+
+    console.log({available, biometryType});
+
+    if (available && biometryType === BiometryTypes.Biometrics) {
+      setIsBiometricAvailable(true);
+    }
   };
+
+  const handleBiometricAuth = async () => {
+    if (!isBiometricAvailable) {
+      return;
+    }
+
+    try {
+      const { success } = await rnBiometrics.simplePrompt({
+        promptMessage: 'Scan your fingerprint to authenticate.',
+        cancelButtonText: 'Close',
+      });
+
+      if (success) {
+        showSuccessMessage();
+      } else {
+        showErrorMessage();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    isBiometricSupport();
+  }, []);
 
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
@@ -100,6 +136,8 @@ export const SignUp = ({ navigation }: Props) => {
             <AppButton onPress={signUpWithAsyncStorage} title="Sign up with async storage" />
             <AppButton onPress={signUpWithEncryptedStorage} title="Sign up with encrypted storage" />
             <AppButton onPress={goBack} title="Go back" />
+
+            <AppButton onPress={handleBiometricAuth} title="Sign with biometrics" />
           </LinearGradient>
         </View>
       </ScrollView>
