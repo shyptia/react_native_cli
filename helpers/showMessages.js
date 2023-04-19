@@ -17,7 +17,7 @@ export const showSuccessMessage = () => showMessage({
 
 export const showErrorMessage = () => showMessage({
   message: 'Error message',
-  description: 'Something went wrong',
+  description: 'Please enter valid values',
   type: 'danger',
   onPress: () => hideMessage(),
 });

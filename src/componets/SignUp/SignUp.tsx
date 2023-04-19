@@ -23,24 +23,39 @@ import SplashScreen from 'react-native-splash-screen';
 import {AppButton} from '../AppButton/AppButton';
 import { styles } from './SignUpStyles';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-
-type RootStackParamList = {
-  Home: undefined;
-  Details: undefined;
-};
+import { showErrorMessage } from '../../../helpers/showMessages';
+import { RootStackParamList } from '../../../App';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Props = {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'Details'>;
+  navigation: NativeStackNavigationProp<RootStackParamList, 'SignUp'>;
 };
 
 export const SignUp = ({ navigation }: Props) => {
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [surname, setSurname] = useState('');
 
   useEffect(() => SplashScreen.hide(), []);
 
   const goBack = () => navigation.goBack();
-  const signUp = () => console.log(password);
+  const storeData = async (key: string, value: string) => {
+    try {
+      await AsyncStorage.setItem(key, value);
+    } catch (e) {
+      console.log('Error occur');
+    }
+  };
+
+  const signUpWithAsyncStorage = () => {
+    if (!username || !surname) {
+      showErrorMessage();
+      return;
+    }
+
+    storeData('username', username);
+    storeData('surname', surname);
+    navigation.navigate('SignUpWithAsyncStorage');
+  };
 
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
@@ -70,47 +85,16 @@ export const SignUp = ({ navigation }: Props) => {
 
             <TextInput
               style={styles.input}
-              placeholder="Password"
-              secureTextEntry={true}
-              value={password}
-              onChangeText={(text) => setPassword(text)}
+              placeholder="Surname"
+              value={surname}
+              onChangeText={(text) => setSurname(text)}
             />
 
-            <AppButton onPress={signUp} title="Sign Up" />
-              <AppButton onPress={goBack} title="Go back" />
+            <AppButton onPress={signUpWithAsyncStorage} title="Sign up with async storage" />
+            <AppButton onPress={goBack} title="Go back" />
           </LinearGradient>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
-
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     paddingHorizontal: 20,
-//   },
-//   input: {
-//     borderWidth: 1,
-//     borderColor: '#ccc',
-//     borderRadius: 5,
-//     padding: 10,
-//     marginVertical: 10,
-//     width: '100%',
-//   },
-//   button: {
-//     backgroundColor: '#009688',
-//     borderRadius: 5,
-//     padding: 10,
-//     marginTop: 20,
-//     width: '100%',
-//     alignItems: 'center',
-//   },
-//   buttonText: {
-//     color: '#fff',
-//     fontSize: 16,
-//   },
-// });

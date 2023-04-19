@@ -25,7 +25,6 @@ import {GradientText} from '../GradientText/GradientText';
 import Config from 'react-native-config';
 import SplashScreen from 'react-native-splash-screen';
 import {Section} from '../Section/Section';
-import FlashMessage from 'react-native-flash-message';
 import {AppButton} from '../AppButton/AppButton';
 import {
   showErrorMessage,
@@ -34,11 +33,7 @@ import {
 } from '../../../helpers/showMessages';
 import { styles } from './HomeScreenStyles';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-
-type RootStackParamList = {
-  HomeScreen: undefined;
-  SignUp: undefined;
-};
+import { RootStackParamList } from '../../../App';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'HomeScreen'>;
@@ -102,8 +97,6 @@ export const HomeScreen = ({navigation}: Props) => {
               onPress={showSuccessMessage}
             />
           </LinearGradient>
-
-          <FlashMessage position="top" />
         </View>
       </ScrollView>
     </SafeAreaView>

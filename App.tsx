@@ -10,10 +10,13 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {HomeScreen} from './src/componets/HomeScreen/HomeScreen';
 import {SignUp} from './src/componets/SignUp/SignUp';
+import FlashMessage from 'react-native-flash-message';
+import {SignUpWithAsyncStorage} from './src/componets/SignUpWithAsyncStorage/SignUpWithAsyncStorage';
 
-type RootStackParamList = {
+export type RootStackParamList = {
   HomeScreen: undefined;
   SignUp: undefined;
+  SignUpWithAsyncStorage: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -32,7 +35,13 @@ function App(): JSX.Element {
           component={SignUp}
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="SignUpWithAsyncStorage"
+          component={SignUpWithAsyncStorage}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
+      <FlashMessage position="top" />
     </NavigationContainer>
   );
 }
