@@ -23,9 +23,10 @@ import SplashScreen from 'react-native-splash-screen';
 import {AppButton} from '../AppButton/AppButton';
 import { styles } from './SignUpStyles';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import { showErrorMessage } from '../../../helpers/showMessages';
+import { showErrorMessage, showSuccessMessage } from '../../../helpers/showMessages';
 import { RootStackParamList } from '../../../App';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { storeData } from '../../../helpers/storeDataInAsyncStorage';
+import { storeUserData } from '../../../helpers/storeDataWithEncryptedStorage';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'SignUp'>;
@@ -38,13 +39,6 @@ export const SignUp = ({ navigation }: Props) => {
   useEffect(() => SplashScreen.hide(), []);
 
   const goBack = () => navigation.goBack();
-  const storeData = async (key: string, value: string) => {
-    try {
-      await AsyncStorage.setItem(key, value);
-    } catch (e) {
-      console.log('Error occur');
-    }
-  };
 
   const signUpWithAsyncStorage = () => {
     if (!username || !surname) {
@@ -54,7 +48,20 @@ export const SignUp = ({ navigation }: Props) => {
 
     storeData('username', username);
     storeData('surname', surname);
+    showSuccessMessage();
     navigation.navigate('SignUpWithAsyncStorage');
+  };
+
+  const signUpWithEncryptedStorage = () => {
+    if (!username || !surname) {
+      showErrorMessage();
+      return;
+    }
+
+    const userData = { username, surname };
+    storeUserData('userData', userData);
+    showSuccessMessage();
+    navigation.navigate('SignUpWithEncryptedStorage');
   };
 
   const isDarkMode = useColorScheme() === 'dark';
@@ -91,6 +98,7 @@ export const SignUp = ({ navigation }: Props) => {
             />
 
             <AppButton onPress={signUpWithAsyncStorage} title="Sign up with async storage" />
+            <AppButton onPress={signUpWithEncryptedStorage} title="Sign up with encrypted storage" />
             <AppButton onPress={goBack} title="Go back" />
           </LinearGradient>
         </View>

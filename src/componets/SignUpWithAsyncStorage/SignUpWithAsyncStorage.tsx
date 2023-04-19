@@ -12,8 +12,18 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {styles} from './SignUpWithAsyncStorageStyles';
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {AppButton} from '../AppButton/AppButton';
+import {RootStackParamList} from '../../../App';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-export const SignUpWithAsyncStorage: React.FC = () => {
+type Props = {
+  navigation: NativeStackNavigationProp<
+    RootStackParamList,
+    'SignUpWithAsyncStorage'
+  >;
+};
+
+export const SignUpWithAsyncStorage = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const [username, setUsername] = useState('');
   const [surname, setSurname] = useState('');
@@ -58,6 +68,8 @@ export const SignUpWithAsyncStorage: React.FC = () => {
             colors={['#f2cc7b', '#cc420a']}
             style={styles.linearGradient}>
             <Text style={styles.text}>{`Hi, ${username} ${surname}`}</Text>
+
+            <AppButton title="Go back" onPress={() => navigation.goBack()} />
           </LinearGradient>
         </View>
       </ScrollView>

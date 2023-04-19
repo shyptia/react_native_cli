@@ -10,7 +10,7 @@ export const showInfoMessage = () => showMessage({
 
 export const showSuccessMessage = () => showMessage({
   message: 'Success message',
-  description: 'You have successfully registered',
+  description: 'Your data has been successfully saved to the storage',
   type: 'success',
   onPress: () => hideMessage(),
 });
