@@ -16,6 +16,7 @@ import {RootStackParamList} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {UserData} from '../../../type/UserData';
+import BottomSheet from 'react-native-bottomsheet';
 
 type Props = {
   navigation: NativeStackNavigationProp<
@@ -28,6 +29,7 @@ export const SignUpWithEncryptedStorage = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const [username, setUsername] = useState('');
   const [surname, setSurname] = useState('');
+  const [_, setSelectedItemId] = useState(0);
 
   const getData = async () => {
     try {
@@ -52,6 +54,20 @@ export const SignUpWithEncryptedStorage = ({navigation}: Props) => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const onButtonPress = () => {
+    BottomSheet.showBottomSheetWithOptions(
+      {
+        options: ['BMW', 'Audi', 'Volvo'],
+        title: 'Choose a car',
+        dark: true,
+        cancelButtonIndex: 3,
+      },
+      value => {
+        setSelectedItemId(value);
+      },
+    );
+  };
+
   return (
     <SafeAreaView style={[backgroundStyle, {flex: 1}]}>
       <StatusBar
@@ -68,6 +84,7 @@ export const SignUpWithEncryptedStorage = ({navigation}: Props) => {
             style={styles.linearGradient}>
             <Text style={styles.text}>{`Hi, ${username} ${surname}`}</Text>
 
+            <AppButton title="Show bottomsheet" onPress={onButtonPress} />
             <AppButton title="Go back" onPress={() => navigation.goBack()} />
           </LinearGradient>
         </View>
