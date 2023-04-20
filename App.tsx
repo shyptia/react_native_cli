@@ -13,12 +13,14 @@ import {SignUp} from './src/componets/SignUp/SignUp';
 import FlashMessage from 'react-native-flash-message';
 import {SignUpWithAsyncStorage} from './src/componets/SignUpWithAsyncStorage/SignUpWithAsyncStorage';
 import {SignUpWithEncryptedStorage} from './src/componets/SignUpWithEncryptedStorage/SignUpWithEncryptedStorage';
+import {Camera} from './src/componets/Camera/Camera';
 
 export type RootStackParamList = {
   HomeScreen: undefined;
   SignUp: undefined;
   SignUpWithAsyncStorage: undefined;
   SignUpWithEncryptedStorage: undefined;
+  Camera: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -45,6 +47,11 @@ function App(): JSX.Element {
         <Stack.Screen
           name="SignUpWithEncryptedStorage"
           component={SignUpWithEncryptedStorage}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Camera"
+          component={Camera}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

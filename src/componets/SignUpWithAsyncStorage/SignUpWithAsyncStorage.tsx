@@ -69,6 +69,10 @@ export const SignUpWithAsyncStorage = ({navigation}: Props) => {
             style={styles.linearGradient}>
             <Text style={styles.text}>{`Hi, ${username} ${surname}`}</Text>
 
+            <AppButton
+              title="Open camera"
+              onPress={() => navigation.navigate('Camera')}
+            />
             <AppButton title="Go back" onPress={() => navigation.goBack()} />
           </LinearGradient>
         </View>
