@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -7,9 +7,11 @@ import {
   useColorScheme,
   View,
   Text,
+  TextInput,
+  Button,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {styles} from './SignUpWithAsyncEncryptedStyles';
+import {styles} from './SignUpWithEncryptedStyles';
 import LinearGradient from 'react-native-linear-gradient';
 import {AppButton} from '../AppButton/AppButton';
 import {RootStackParamList} from '../../../App';
@@ -17,6 +19,11 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {UserData} from '../../../type/UserData';
 import BottomSheet from 'react-native-bottomsheet';
+import {observer} from 'mobx-react-lite';
+import {todosStore} from '../../TodosStore';
+import {TodosList} from '../TodosList/TodosList';
+import 'react-native-get-random-values';
+import {v4 as uuid} from 'uuid';
 
 type Props = {
   navigation: NativeStackNavigationProp<
@@ -25,11 +32,15 @@ type Props = {
   >;
 };
 
-export const SignUpWithEncryptedStorage = ({navigation}: Props) => {
+export const SignUpWithEncryptedStorage = observer(({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const [username, setUsername] = useState('');
   const [surname, setSurname] = useState('');
   const [_, setSelectedItemId] = useState(0);
+  const [todoTitle, setTodoTitle] = useState('');
+  const {todos, addTodo} = todosStore;
+
+  console.log('render');
 
   const getData = async () => {
     try {
@@ -54,7 +65,7 @@ export const SignUpWithEncryptedStorage = ({navigation}: Props) => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const onButtonPress = () => {
+  const onButtonPress = useCallback(() => {
     BottomSheet.showBottomSheetWithOptions(
       {
         options: ['BMW', 'Audi', 'Volvo'],
@@ -66,7 +77,14 @@ export const SignUpWithEncryptedStorage = ({navigation}: Props) => {
         setSelectedItemId(value);
       },
     );
-  };
+  }, []);
+
+  const handleAddTodo = useCallback(() => {
+    const id = uuid().slice(0, 8);
+    const newTodo = {id, title: todoTitle};
+    addTodo(newTodo);
+    setTodoTitle('');
+  }, [todoTitle, addTodo]);
 
   return (
     <SafeAreaView style={[backgroundStyle, {flex: 1}]}>
@@ -84,6 +102,22 @@ export const SignUpWithEncryptedStorage = ({navigation}: Props) => {
             style={styles.linearGradient}>
             <Text style={styles.text}>{`Hi, ${username} ${surname}`}</Text>
 
+            <TextInput
+              style={styles.input}
+              placeholder="New todo"
+              value={todoTitle}
+              onChangeText={value => setTodoTitle(value)}
+            />
+            <Button title="Add todo" onPress={handleAddTodo} />
+
+            {todos.length === 0 ? (
+              <Text style={[styles.text, {marginVertical: 10}]}>
+                There is no todos
+              </Text>
+            ) : (
+              <TodosList todos={todos} />
+            )}
+
             <AppButton title="Show bottomsheet" onPress={onButtonPress} />
             <AppButton
               title="Go to screen with animation"
@@ -95,4 +129,4 @@ export const SignUpWithEncryptedStorage = ({navigation}: Props) => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+});
