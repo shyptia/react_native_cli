@@ -1,4 +1,3 @@
-// import React from 'react';
 import {makeObservable, action, observable} from 'mobx';
 import {Todo} from '../type/Todo';
 
@@ -18,5 +17,3 @@ class TodosStore {
 }
 
 export const todosStore = new TodosStore();
-// export const TodosStoreContext = React.createContext(todosStore);
-// export const useTodosStore = () => React.useContext(TodosStoreContext);
