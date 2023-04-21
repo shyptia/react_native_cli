@@ -85,6 +85,10 @@ export const SignUpWithEncryptedStorage = ({navigation}: Props) => {
             <Text style={styles.text}>{`Hi, ${username} ${surname}`}</Text>
 
             <AppButton title="Show bottomsheet" onPress={onButtonPress} />
+            <AppButton
+              title="Go to screen with animation"
+              onPress={() => navigation.navigate('ScreenWithAnimation')}
+            />
             <AppButton title="Go back" onPress={() => navigation.goBack()} />
           </LinearGradient>
         </View>

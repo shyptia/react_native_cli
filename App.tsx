@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -14,6 +15,8 @@ import FlashMessage from 'react-native-flash-message';
 import {SignUpWithAsyncStorage} from './src/componets/SignUpWithAsyncStorage/SignUpWithAsyncStorage';
 import {SignUpWithEncryptedStorage} from './src/componets/SignUpWithEncryptedStorage/SignUpWithEncryptedStorage';
 import {Camera} from './src/componets/Camera/Camera';
+import {ScreenWithAnimation} from './src/componets/ScreenWithAnimation/ScreenWithAnimation';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 export type RootStackParamList = {
   HomeScreen: undefined;
@@ -21,42 +24,50 @@ export type RootStackParamList = {
   SignUpWithAsyncStorage: undefined;
   SignUpWithEncryptedStorage: undefined;
   Camera: undefined;
+  ScreenWithAnimation: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="HomeScreen">
-        <Stack.Screen
-          name="HomeScreen"
-          component={HomeScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="SignUp"
-          component={SignUp}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="SignUpWithAsyncStorage"
-          component={SignUpWithAsyncStorage}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="SignUpWithEncryptedStorage"
-          component={SignUpWithEncryptedStorage}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Camera"
-          component={Camera}
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
-      <FlashMessage position="top" />
-    </NavigationContainer>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="HomeScreen">
+          <Stack.Screen
+            name="HomeScreen"
+            component={HomeScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="SignUp"
+            component={SignUp}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="SignUpWithAsyncStorage"
+            component={SignUpWithAsyncStorage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="SignUpWithEncryptedStorage"
+            component={SignUpWithEncryptedStorage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Camera"
+            component={Camera}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="ScreenWithAnimation"
+            component={ScreenWithAnimation}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+        <FlashMessage position="top" />
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }
 
