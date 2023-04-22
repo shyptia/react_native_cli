@@ -27,6 +27,7 @@ import { RootStackParamList } from '../../../App';
 import { getDeviceInfo } from '../../../helpers/getDeviceInfo';
 import NetInfo from '@react-native-community/netinfo';
 import { showErrorMessage } from '../../../helpers/showMessages';
+import { chechWifiConnection, checkCellularConnection } from '../../../helpers/checkInternetConnection';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'HomeScreen'>;
@@ -40,8 +41,6 @@ export const HomeScreen = ({navigation}: Props) => {
     getDeviceInfo();
 
     const removeNetInfoSubscription = NetInfo.addEventListener(networkState => {
-      console.log(networkState.type);
-
       if (!networkState.isConnected) {
         showErrorMessage();
         console.log('You are not connected');
@@ -49,22 +48,11 @@ export const HomeScreen = ({navigation}: Props) => {
       }
 
       if (networkState.type === 'wifi') {
-        const linkSpeed = networkState.details.linkSpeed;
-        console.log('linkSpeed is', linkSpeed);
-
-        if (linkSpeed && linkSpeed < 5) {
-          showErrorMessage();
-          console.log('Your internet connection is slow');
-        }
+        chechWifiConnection(networkState);
       }
 
       if (networkState.type === 'cellular') {
-        const cellularGeneration = networkState.details.cellularGeneration;
-
-        if (cellularGeneration === '2g' || !cellularGeneration) {
-          showErrorMessage();
-          console.log('Your internet connection is slow');
-        }
+        checkCellularConnection(networkState);
       }
     });
 
