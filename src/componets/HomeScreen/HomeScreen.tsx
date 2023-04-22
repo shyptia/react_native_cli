@@ -25,6 +25,8 @@ import { styles } from './HomeScreenStyles';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
 import { getDeviceInfo } from '../../../helpers/getDeviceInfo';
+import NetInfo from '@react-native-community/netinfo';
+import { showErrorMessage } from '../../../helpers/showMessages';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'HomeScreen'>;
@@ -36,6 +38,37 @@ export const HomeScreen = ({navigation}: Props) => {
   useEffect(() => {
     SplashScreen.hide();
     getDeviceInfo();
+
+    const removeNetInfoSubscription = NetInfo.addEventListener(networkState => {
+      console.log(networkState.type);
+
+      if (!networkState.isConnected) {
+        showErrorMessage();
+        console.log('You are not connected');
+        return;
+      }
+
+      if (networkState.type === 'wifi') {
+        const linkSpeed = networkState.details.linkSpeed;
+        console.log('linkSpeed is', linkSpeed);
+
+        if (linkSpeed && linkSpeed < 5) {
+          showErrorMessage();
+          console.log('Your internet connection is slow');
+        }
+      }
+
+      if (networkState.type === 'cellular') {
+        const cellularGeneration = networkState.details.cellularGeneration;
+
+        if (cellularGeneration === '2g' || !cellularGeneration) {
+          showErrorMessage();
+          console.log('Your internet connection is slow');
+        }
+      }
+    });
+
+    return () => removeNetInfoSubscription();
   }, []);
   const onPress = () => navigation.navigate('SignUp');
 
