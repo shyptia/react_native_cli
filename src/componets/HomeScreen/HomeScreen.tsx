@@ -26,7 +26,6 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
 import { getDeviceInfo } from '../../../helpers/getDeviceInfo';
 import NetInfo from '@react-native-community/netinfo';
-import { showErrorMessage } from '../../../helpers/showMessages';
 import { chechWifiConnection, checkCellularConnection } from '../../../helpers/checkInternetConnection';
 
 type Props = {
@@ -42,7 +41,6 @@ export const HomeScreen = ({navigation}: Props) => {
 
     const removeNetInfoSubscription = NetInfo.addEventListener(networkState => {
       if (!networkState.isConnected) {
-        showErrorMessage();
         console.log('You are not connected');
         return;
       }

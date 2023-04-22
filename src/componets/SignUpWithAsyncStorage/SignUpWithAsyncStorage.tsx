@@ -15,6 +15,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AppButton} from '../AppButton/AppButton';
 import {RootStackParamList} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import Geolocation, {
+  GeolocationResponse,
+} from '@react-native-community/geolocation';
 
 type Props = {
   navigation: NativeStackNavigationProp<
@@ -27,6 +30,7 @@ export const SignUpWithAsyncStorage = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const [username, setUsername] = useState('');
   const [surname, setSurname] = useState('');
+  const [location, setLocation] = useState<GeolocationResponse | null>(null);
 
   const getData = async () => {
     try {
@@ -48,6 +52,12 @@ export const SignUpWithAsyncStorage = ({navigation}: Props) => {
   useEffect(() => {
     getData();
   }, []);
+
+  const getLocation = () => {
+    Geolocation.getCurrentPosition(position => {
+      setLocation(position);
+    });
+  };
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -73,6 +83,20 @@ export const SignUpWithAsyncStorage = ({navigation}: Props) => {
               title="Open camera"
               onPress={() => navigation.navigate('Camera')}
             />
+
+            <AppButton title="Get location" onPress={getLocation} />
+
+            {location && (
+              <View>
+                <Text style={styles.text}>
+                  {'Latitude: ' + location.coords.latitude}
+                </Text>
+                <Text style={styles.text}>
+                  {'Longitude: ' + location.coords.longitude}
+                </Text>
+              </View>
+            )}
+
             <AppButton title="Go back" onPress={() => navigation.goBack()} />
           </LinearGradient>
         </View>

@@ -9,18 +9,13 @@ export const styles = StyleSheet.create({
   },
   linearGradient: {
     flex: 1,
-    paddingHorizontal: 20,
-    justifyContent: 'center',
+    padding: 20,
   },
   text: {
+    marginBottom: 15,
     fontFamily: 'Montserrat',
     fontSize: 16,
     fontWeight: 'bold',
     color: 'black',
-  },
-  preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
   },
 });
