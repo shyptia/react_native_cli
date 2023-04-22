@@ -24,6 +24,7 @@ import {AppButton} from '../AppButton/AppButton';
 import { styles } from './HomeScreenStyles';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
+import { getDeviceInfo } from '../../../helpers/getDeviceInfo';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'HomeScreen'>;
@@ -32,7 +33,10 @@ type Props = {
 export const HomeScreen = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
 
-  useEffect(() => SplashScreen.hide(), []);
+  useEffect(() => {
+    SplashScreen.hide();
+    getDeviceInfo();
+  }, []);
   const onPress = () => navigation.navigate('SignUp');
 
   const backgroundStyle = {
