@@ -16,7 +16,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-
+import {CopilotStep, useCopilot} from 'react-native-copilot';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import LinearGradient from 'react-native-linear-gradient';
 import {AppButton} from '../AppButton/AppButton';
@@ -38,6 +38,7 @@ export const SignUp = ({ navigation }: Props) => {
   const [username, setUsername] = useState('');
   const [surname, setSurname] = useState('');
   const [isBiometricAvailable, setIsBiometricAvailable] = useState(false);
+  const {start} = useCopilot();
 
   const goBack = useCallback(() => navigation.goBack(), [navigation]);
 
@@ -133,11 +134,32 @@ export const SignUp = ({ navigation }: Props) => {
               onChangeText={(text) => setSurname(text)}
             />
 
-            <AppButton onPress={signUpWithAsyncStorage} title="Sign up with async storage" />
-            <AppButton onPress={signUpWithEncryptedStorage} title="Sign up with encrypted storage" />
-            <AppButton onPress={goBack} title="Go back" />
+            <CopilotStep
+              text="You can sign in with async storage"
+              order={1}
+              name="AsyncStorage"
+            >
+              <AppButton onPress={signUpWithAsyncStorage} title="Sign up with async storage" />
+            </CopilotStep>
 
-            <AppButton onPress={handleBiometricAuth} title="Sign with biometrics" />
+            <CopilotStep
+              text="You can sign in with encrypted storage"
+              order={2}
+              name="EncryptedStorage"
+            >
+              <AppButton onPress={signUpWithEncryptedStorage} title="Sign up with encrypted storage" />
+            </CopilotStep>
+
+            <CopilotStep
+              text="You can sign in with biometrics"
+              order={3}
+              name="Biometrics"
+            >
+              <AppButton onPress={handleBiometricAuth} title="Sign with biometrics" />
+            </CopilotStep>
+
+            <AppButton onPress={() => start()} title="Start tutorial" />
+            <AppButton onPress={goBack} title="Go back" />
           </LinearGradient>
         </View>
       </ScrollView>

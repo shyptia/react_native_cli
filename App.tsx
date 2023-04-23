@@ -18,6 +18,7 @@ import {Camera} from './src/componets/Camera/Camera';
 import {ScreenWithAnimation} from './src/componets/ScreenWithAnimation/ScreenWithAnimation';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {WebComponent} from './src/componets/WebComponent/WebComponent';
+import {CopilotProvider} from 'react-native-copilot';
 
 export type RootStackParamList = {
   HomeScreen: undefined;
@@ -34,46 +35,48 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function App(): JSX.Element {
   return (
     <GestureHandlerRootView style={{flex: 1}}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="HomeScreen">
-          <Stack.Screen
-            name="HomeScreen"
-            component={HomeScreen}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="SignUp"
-            component={SignUp}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="SignUpWithAsyncStorage"
-            component={SignUpWithAsyncStorage}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="SignUpWithEncryptedStorage"
-            component={SignUpWithEncryptedStorage}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Camera"
-            component={Camera}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="ScreenWithAnimation"
-            component={ScreenWithAnimation}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="WebComponent"
-            component={WebComponent}
-            options={{headerShown: false}}
-          />
-        </Stack.Navigator>
-        <FlashMessage position="top" />
-      </NavigationContainer>
+      <CopilotProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="HomeScreen">
+            <Stack.Screen
+              name="HomeScreen"
+              component={HomeScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="SignUp"
+              component={SignUp}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="SignUpWithAsyncStorage"
+              component={SignUpWithAsyncStorage}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="SignUpWithEncryptedStorage"
+              component={SignUpWithEncryptedStorage}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Camera"
+              component={Camera}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="ScreenWithAnimation"
+              component={ScreenWithAnimation}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="WebComponent"
+              component={WebComponent}
+              options={{headerShown: false}}
+            />
+          </Stack.Navigator>
+          <FlashMessage position="top" />
+        </NavigationContainer>
+      </CopilotProvider>
     </GestureHandlerRootView>
   );
 }
