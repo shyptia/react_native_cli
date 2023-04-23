@@ -17,6 +17,7 @@ import {SignUpWithEncryptedStorage} from './src/componets/SignUpWithEncryptedSto
 import {Camera} from './src/componets/Camera/Camera';
 import {ScreenWithAnimation} from './src/componets/ScreenWithAnimation/ScreenWithAnimation';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {WebComponent} from './src/componets/WebComponent/WebComponent';
 
 export type RootStackParamList = {
   HomeScreen: undefined;
@@ -25,6 +26,7 @@ export type RootStackParamList = {
   SignUpWithEncryptedStorage: undefined;
   Camera: undefined;
   ScreenWithAnimation: undefined;
+  WebComponent: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -62,6 +64,11 @@ function App(): JSX.Element {
           <Stack.Screen
             name="ScreenWithAnimation"
             component={ScreenWithAnimation}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="WebComponent"
+            component={WebComponent}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

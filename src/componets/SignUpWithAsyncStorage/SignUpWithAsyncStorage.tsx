@@ -84,6 +84,11 @@ export const SignUpWithAsyncStorage = ({navigation}: Props) => {
               onPress={() => navigation.navigate('Camera')}
             />
 
+            <AppButton
+              title="Go to WebComponent"
+              onPress={() => navigation.navigate('WebComponent')}
+            />
+
             <AppButton title="Get location" onPress={getLocation} />
 
             {location && (
