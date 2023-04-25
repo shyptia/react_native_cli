@@ -19,6 +19,7 @@ import {ScreenWithAnimation} from './src/componets/ScreenWithAnimation/ScreenWit
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {WebComponent} from './src/componets/WebComponent/WebComponent';
 import {CopilotProvider} from 'react-native-copilot';
+import {TodosList} from './src/componets/TodosList/TodosList';
 
 export type RootStackParamList = {
   HomeScreen: undefined;
@@ -28,6 +29,7 @@ export type RootStackParamList = {
   Camera: undefined;
   ScreenWithAnimation: undefined;
   WebComponent: undefined;
+  TodosList: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -71,6 +73,11 @@ function App(): JSX.Element {
             <Stack.Screen
               name="WebComponent"
               component={WebComponent}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="TodosList"
+              component={TodosList}
               options={{headerShown: false}}
             />
           </Stack.Navigator>

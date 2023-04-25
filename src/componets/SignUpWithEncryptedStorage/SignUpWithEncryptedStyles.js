@@ -20,13 +20,4 @@ export const styles = StyleSheet.create({
     color: 'black',
     alignSelf: 'center',
   },
-  input: {
-    width: '100%',
-    padding: 10,
-    marginVertical: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    backgroundColor: 'white',
-    borderRadius: 5,
-  },
 });
