@@ -17,7 +17,6 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {UserData} from '../../../type/UserData';
 import BottomSheet from 'react-native-bottomsheet';
-import {observer} from 'mobx-react-lite';
 import 'react-native-get-random-values';
 
 type Props = {
@@ -27,7 +26,7 @@ type Props = {
   >;
 };
 
-export const SignUpWithEncryptedStorage = observer(({navigation}: Props) => {
+export const SignUpWithEncryptedStorage = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const [username, setUsername] = useState('');
   const [surname, setSurname] = useState('');
@@ -104,4 +103,4 @@ export const SignUpWithEncryptedStorage = observer(({navigation}: Props) => {
       </ScrollView>
     </SafeAreaView>
   );
-});
+};

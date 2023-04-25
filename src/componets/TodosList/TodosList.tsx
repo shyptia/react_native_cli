@@ -19,12 +19,13 @@ import {v4 as uuid} from 'uuid';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import LinearGradient from 'react-native-linear-gradient';
 import {AppButton} from '../AppButton/AppButton';
+import {observer} from 'mobx-react-lite';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'TodosList'>;
 };
 
-export const TodosList: React.FC<Props> = ({navigation}) => {
+export const TodosList: React.FC<Props> = observer(({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const [todoTitle, setTodoTitle] = useState('');
   const {todos, addTodo} = todosStore;
@@ -77,4 +78,4 @@ export const TodosList: React.FC<Props> = ({navigation}) => {
       </View>
     </SafeAreaView>
   );
-};
+});
