@@ -4,19 +4,19 @@ export const todosData = [
     data: [
       {
         id: '1',
-        task: 'css',
+        title: 'css',
       },
       {
         id: '2',
-        task: 'html',
+        title: 'html',
       },
       {
         id: '3',
-        task: 'react',
+        title: 'react',
       },
       {
         id: '4',
-        task: 'js',
+        title: 'js',
       },
     ],
   },
@@ -25,7 +25,7 @@ export const todosData = [
     data: [
       {
         id: '4',
-        task: 'react native',
+        title: 'react native',
       },
     ],
   },
