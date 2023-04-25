@@ -20,6 +20,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {WebComponent} from './src/componets/WebComponent/WebComponent';
 import {CopilotProvider} from 'react-native-copilot';
 import {TodosList} from './src/componets/TodosList/TodosList';
+import {ContactsComponent} from './src/componets/Contacts/Contacts';
 
 export type RootStackParamList = {
   HomeScreen: undefined;
@@ -30,6 +31,7 @@ export type RootStackParamList = {
   ScreenWithAnimation: undefined;
   WebComponent: undefined;
   TodosList: undefined;
+  ContactsComponent: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -78,6 +80,11 @@ function App(): JSX.Element {
             <Stack.Screen
               name="TodosList"
               component={TodosList}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="ContactsComponent"
+              component={ContactsComponent}
               options={{headerShown: false}}
             />
           </Stack.Navigator>

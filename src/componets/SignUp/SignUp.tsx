@@ -159,6 +159,9 @@ export const SignUp = ({ navigation }: Props) => {
             </CopilotStep>
 
             <AppButton onPress={() => start()} title="Start tutorial" />
+
+            <AppButton onPress={() => navigation.navigate('ContactsComponent')} title="Go to contacts component" />
+
             <AppButton onPress={goBack} title="Go back" />
           </LinearGradient>
         </View>
