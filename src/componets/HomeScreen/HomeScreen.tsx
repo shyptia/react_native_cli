@@ -24,9 +24,9 @@ import {AppButton} from '../AppButton/AppButton';
 import { styles } from './HomeScreenStyles';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
-import { getDeviceInfo } from '../../../helpers/getDeviceInfo';
+import { getDeviceInfo } from '../../helpers/getDeviceInfo';
 import NetInfo from '@react-native-community/netinfo';
-import { chechWifiConnection, checkCellularConnection } from '../../../helpers/checkInternetConnection';
+import { chechWifiConnection, checkCellularConnection } from '../../helpers/checkInternetConnection';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'HomeScreen'>;

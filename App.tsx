@@ -6,7 +6,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {HomeScreen} from './src/componets/HomeScreen/HomeScreen';
@@ -21,6 +21,10 @@ import {WebComponent} from './src/componets/WebComponent/WebComponent';
 import {CopilotProvider} from 'react-native-copilot';
 import {TodosList} from './src/componets/TodosList/TodosList';
 import {ContactsComponent} from './src/componets/Contacts/Contacts';
+import {
+  requestUserPermission,
+  notificationListener,
+} from './src/helpers/pushNotifications';
 
 export type RootStackParamList = {
   HomeScreen: undefined;
@@ -37,6 +41,11 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
+  useEffect(() => {
+    requestUserPermission();
+    notificationListener();
+  }, []);
+
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <CopilotProvider>

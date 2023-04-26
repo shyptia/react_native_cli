@@ -22,10 +22,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import {AppButton} from '../AppButton/AppButton';
 import { styles } from './SignUpStyles';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import { showErrorMessage, showSuccessMessage } from '../../../helpers/showMessages';
+import { showErrorMessage, showSuccessMessage } from '../../helpers/showMessages';
 import { RootStackParamList } from '../../../App';
-import { storeData } from '../../../helpers/storeDataInAsyncStorage';
-import { storeUserData } from '../../../helpers/storeDataWithEncryptedStorage';
+import { storeData } from '../../helpers/storeDataInAsyncStorage';
+import { storeUserData } from '../../helpers/storeDataWithEncryptedStorage';
 import ReactNativeBiometrics, {BiometryTypes} from 'react-native-biometrics';
 
 type Props = {

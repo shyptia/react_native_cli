@@ -16,7 +16,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {styles} from './ContactsStyles';
 import Contacts, {Contact} from 'react-native-contacts';
 import {PermissionsAndroid} from 'react-native';
-import {showErrorMessage} from '../../../helpers/showMessages';
+import {showErrorMessage} from '../../helpers/showMessages';
 
 interface Props {
   navigation: NativeStackNavigationProp<

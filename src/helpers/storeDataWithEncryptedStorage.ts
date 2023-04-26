@@ -1,5 +1,5 @@
 import EncryptedStorage from 'react-native-encrypted-storage';
-import {UserData} from '../type/UserData';
+import {UserData} from '../../type/UserData';
 
 export const storeUserData = async (key: string, value: UserData) => {
   try {
