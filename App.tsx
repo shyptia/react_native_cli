@@ -24,6 +24,7 @@ import {ContactsComponent} from './src/componets/Contacts/Contacts';
 import {
   requestUserPermission,
   notificationListener,
+  askPermission,
 } from './src/helpers/pushNotifications';
 
 export type RootStackParamList = {
@@ -42,6 +43,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
   useEffect(() => {
+    askPermission();
     requestUserPermission();
     notificationListener();
   }, []);
