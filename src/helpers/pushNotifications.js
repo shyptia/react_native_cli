@@ -1,5 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import messaging from '@react-native-firebase/messaging';
+import {Notifications} from 'react-native-notifications';
 import {PermissionsAndroid} from 'react-native';
 
 export const askPermission = () => {
@@ -19,57 +18,40 @@ export const askPermission = () => {
     });
 };
 
-export async function requestUserPermission() {
-  const authStatus = await messaging().requestPermission();
-  const enabled =
-    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-  if (enabled) {
-    console.log('Authorization status:', authStatus);
-    GetFMCToken();
-  }
-}
-
-async function GetFMCToken() {
-  const fcmToken = await AsyncStorage.getItem('fcmToken');
-  console.log('old token', fcmToken);
-
-  if (!fcmToken) {
-    try {
-      const newFcmToken = await messaging().getToken();
-
-      if (newFcmToken) {
-        console.log('new token', newFcmToken);
-        await AsyncStorage.setItem('fcmToken', newFcmToken);
-      }
-    } catch (error) {
-      console.log('Error occur in fcmToken');
-    }
-  }
-}
-
 export const notificationListener = () => {
-  messaging().onNotificationOpenedApp(remoteMessage => {
-    console.log(
-      'Notification caused app to open from background state:',
-      remoteMessage.notification,
-    );
+  Notifications.registerRemoteNotifications();
+
+  Notifications.events().registerRemoteNotificationsRegistered(event => {
+    console.log('Device Token Received', event.deviceToken);
   });
 
-  messaging()
-    .getInitialNotification()
-    .then(remoteMessage => {
-      if (remoteMessage) {
-        console.log(
-          'Notification caused app to open from quit state:',
-          remoteMessage.notification,
-        );
-      }
-    })
-    .catch(error => console.log('failed', error));
+  Notifications.events().registerRemoteNotificationsRegistrationFailed(
+    event => {
+      console.error(event);
+    },
+  );
 
-  messaging().onMessage(async remoteMessage => {
-    console.log('A new FCM message arrived!', remoteMessage);
-  });
+  Notifications.events().registerNotificationReceivedForeground(
+    (notification, completion) => {
+      console.log('Notification received in foreground');
+      completion({alert: true, sound: true, badge: false});
+    },
+  );
+
+  Notifications.events().registerNotificationOpened(
+    (notification, completion) => {
+      console.log('Notification opened');
+      completion();
+    },
+  );
+
+  Notifications.events().registerNotificationReceivedBackground(
+    (notification, completion) => {
+      console.log(
+        `Notification received in background: ${notification.title} : ${notification.body}`,
+      );
+
+      completion({alert: true, sound: true, badge: false});
+    },
+  );
 };

@@ -22,9 +22,8 @@ import {CopilotProvider} from 'react-native-copilot';
 import {TodosList} from './src/componets/TodosList/TodosList';
 import {ContactsComponent} from './src/componets/Contacts/Contacts';
 import {
-  requestUserPermission,
-  notificationListener,
   askPermission,
+  notificationListener,
 } from './src/helpers/pushNotifications';
 
 export type RootStackParamList = {
@@ -44,7 +43,6 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function App(): JSX.Element {
   useEffect(() => {
     askPermission();
-    requestUserPermission();
     notificationListener();
   }, []);
 
